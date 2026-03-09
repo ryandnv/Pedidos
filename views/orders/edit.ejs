@@ -1,0 +1,54 @@
+<%- include("../partials/head", { pageTitle: "Editar Pedido" }) %>
+<%- include("../partials/navbar") %>
+
+<div class="container" style="max-width: 800px;">
+  <div class="card shadow-sm p-4">
+    <h2 class="fw-bold mb-4">Editar pedido</h2>
+
+    <form action="/order/update/<%= order.orderId %>" method="POST">
+      <div class="mb-3">
+        <label class="form-label">Número do pedido</label>
+        <input type="text" name="orderId" value="<%= order.orderId %>" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Valor total</label>
+        <input type="number" name="value" step="0.01" value="<%= order.value %>" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Data de criação</label>
+        <input
+          type="datetime-local"
+          name="creationDate"
+          value="<%= new Date(order.creationDate.getTime() - order.creationDate.getTimezoneOffset() * 60000).toISOString().slice(0,16) %>"
+          class="form-control"
+          required
+        >
+      </div>
+
+      <hr>
+
+      <h5 class="fw-bold mb-3">Item do pedido</h5>
+
+      <div class="mb-3">
+        <label class="form-label">ID do produto</label>
+        <input type="number" name="productId" value="<%= order.items[0] ? order.items[0].productId : '' %>" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Quantidade</label>
+        <input type="number" name="quantity" value="<%= order.items[0] ? order.items[0].quantity : '' %>" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Preço</label>
+        <input type="number" name="price" step="0.01" value="<%= order.items[0] ? order.items[0].price : '' %>" class="form-control" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Atualizar pedido</button>
+    </form>
+  </div>
+</div>
+
+<%- include("../partials/footer") %>

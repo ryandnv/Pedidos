@@ -1,0 +1,50 @@
+<%- include("../partials/head", { pageTitle: "Detalhes do Pedido" }) %>
+<%- include("../partials/navbar") %>
+
+<div class="container" style="max-width: 900px;">
+  <div class="card shadow-sm p-4">
+    <h2 class="fw-bold mb-4">Detalhes do pedido</h2>
+
+    <p><strong>Número do pedido:</strong> <%= order.orderId %></p>
+    <p><strong>Valor total:</strong> R$ <%= order.value %></p>
+    <p><strong>Data de criação:</strong> <%= new Date(order.creationDate).toLocaleString("pt-BR") %></p>
+
+    <hr>
+
+    <h4 class="fw-bold mb-3">Itens</h4>
+
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Preço</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if(order.items && order.items.length > 0) { %>
+            <% order.items.forEach(item => { %>
+              <tr>
+                <td><%= item.productId %></td>
+                <td><%= item.quantity %></td>
+                <td>R$ <%= item.price %></td>
+              </tr>
+            <% }) %>
+          <% } else { %>
+            <tr>
+              <td colspan="3" class="text-center">Nenhum item encontrado.</td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-3">
+      <a href="/order/list-page" class="btn btn-outline-secondary">Voltar</a>
+      <a href="/order/edit/<%= order.orderId %>" class="btn btn-primary">Editar</a>
+    </div>
+  </div>
+</div>
+
+<%- include("../partials/footer") %>
